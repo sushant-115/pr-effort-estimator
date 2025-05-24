@@ -41,22 +41,22 @@ This tool considers and helps analyze the impact of the following factors on pul
 
 The project follows a clean, modular Go project structure:
 
-pr-estimator/  
+```pr-effort-estimator/  
 ├── main.go               \# Entry point of the application  
-├── app/                  \# Contains the core application logic  
+├── cmd/                  \# Contains the core application logic  
 │   └── app.go            \# The main application execution flow  
 │   └── app\_test.go       \# Integration tests for the core application logic  
-├── github/               \# Handles all interactions with the GitHub API  
+├── api/github/               \# Handles all interactions with the GitHub API  
 │   └── client.go         \# GitHub API client and logic  
 │   └── types.go          \# Data structures for GitHub PR data  
 │   └── client\_test.go    \# Unit tests for the GitHub client  
-├── metrics/              \# Contains logic for calculating PR-related metrics  
+├── interal/metrics/              \# Contains logic for calculating PR-related metrics  
 │   └── calculator.go     \# Functions to compute time durations and aggregate stats  
 │   └── calculator\_test.go\# Unit tests for metric calculations  
-├── config/               \# Manages application configuration  
+├── pkg/config/               \# Manages application configuration  
 │   └── config.go         \# Loads GitHub token, owner, and repository details  
 │   └── config\_test.go    \# Unit tests for configuration loading  
-└── README.md             \# This README file
+└── README.md             \# This README file```
 
 ## **Getting Started**
 
