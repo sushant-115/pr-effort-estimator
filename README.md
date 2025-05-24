@@ -42,21 +42,64 @@ This tool considers and helps analyze the impact of the following factors on pul
 The project follows a clean, modular Go project structure:
 
 ```pr-effort-estimator/  
-├── main.go               \# Entry point of the application  
-├── cmd/                  \# Contains the core application logic  
-│   └── app.go            \# The main application execution flow  
-│   └── app\_test.go       \# Integration tests for the core application logic  
-├── api/github/               \# Handles all interactions with the GitHub API  
-│   └── client.go         \# GitHub API client and logic  
-│   └── types.go          \# Data structures for GitHub PR data  
-│   └── client\_test.go    \# Unit tests for the GitHub client  
-├── interal/metrics/              \# Contains logic for calculating PR-related metrics  
-│   └── calculator.go     \# Functions to compute time durations and aggregate stats  
-│   └── calculator\_test.go\# Unit tests for metric calculations  
-├── pkg/config/               \# Manages application configuration  
-│   └── config.go         \# Loads GitHub token, owner, and repository details  
-│   └── config\_test.go    \# Unit tests for configuration loading  
-└── README.md             \# This README file
+├── main.go                 # Entry point of the application  
+├── cmd/                    # Contains the core application logic  
+│   └── app.go              # The main application execution flow  
+│   └── app_test.go         # Integration tests for the core application logic  
+├── api/github/             # Handles all interactions with the GitHub API  
+│   └── client.go           # GitHub API client and logic  
+│   └── types.go            # Data structures for GitHub PR data  
+│   └── client_test.go      # Unit tests for the GitHub client  
+├── interal/metrics/        # Contains logic for calculating PR-related metrics  
+│   └── calculator.go       # Functions to compute time durations and aggregate stats  
+│   └── calculator_test.go  # Unit tests for metric calculations  
+├── pkg/config/             # Manages application configuration  
+│   └── config.go           # Loads GitHub token, owner, and repository details  
+│   └── config_test.go      # Unit tests for configuration loading  
+└── README.md               # This README file
+```
+
+## **Sample Output**
+
+```
+2025/05/24 20:39:44 PR #4: Core controller (State: closed)
+2025/05/24 20:39:44   Time to First Review: N/A (No reviews or PR still open)
+2025/05/24 20:39:44   Time to Close: 24h25m46s
+2025/05/24 20:39:44   Size: +43941 / -166, Files: 507
+2025/05/24 20:39:44 ---
+2025/05/24 20:39:44 PR #3: Project renamed, making it generic (State: closed)
+2025/05/24 20:39:44   Time to First Review: N/A (No reviews or PR still open)
+2025/05/24 20:39:44   Time to Close: 4m49s
+2025/05/24 20:39:44   Size: +5607 / -698, Files: 76
+2025/05/24 20:39:44 ---
+2025/05/24 20:39:44 PR #2: custom apis (State: closed)
+2025/05/24 20:39:44   Time to First Review: N/A (No reviews or PR still open)
+2025/05/24 20:39:44   Time to Close : 5m26s
+2025/05/24 20:39:44   Size: +540423 / -2445, Files: 1515
+2025/05/24 20:39:44 ---
+2025/05/24 20:39:44 PR #1: Init project (State: closed)
+2025/05/24 20:39:44   Time to First Review: N/A (No reviews or PR still open)
+2025/05/24 20:39:44   Time to Close: 22m50s
+2025/05/24 20:39:44   Size: +2804 / -14, Files: 542
+2025/05/24 20:39:44 ---
+2025/05/24 20:39:44 
+--- Aggregated Metrics (Simple Average) ---
+2025/05/24 20:39:44 No merged PRs to calculate average time to merge.
+2025/05/24 20:39:44 
+--- Normal Distribution Based Estimates ---
+Estimated Time to First Review (based on 23 PRs):
+  Mean: 86h48m26.434782608s, StdDev: 159h20m22.686840149s
+  50th Percentile (Median): 86h48m26.434782608s
+  80th Percentile: 220h54m39.468086424s
+  90th Percentile: 291h0m33.487134501s
+  95th Percentile: 348h53m51.791733276s
+
+Estimated Time to Merge (based on 77 merged PRs):
+  Mean: 76h30m16.493506493s, StdDev: 197h33m57.49083277s
+  50th Percentile (Median): 76h30m16.493506493s
+  80th Percentile: 242h46m49.067904474s
+  90th Percentile: 329h41m44.013357244s
+  95th Percentile: 401h28m18.05992664s
 ```
 
 ## **Getting Started**
