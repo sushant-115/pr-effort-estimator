@@ -56,7 +56,8 @@ The project follows a clean, modular Go project structure:
 ├── pkg/config/               \# Manages application configuration  
 │   └── config.go         \# Loads GitHub token, owner, and repository details  
 │   └── config\_test.go    \# Unit tests for configuration loading  
-└── README.md             \# This README file```
+└── README.md             \# This README file
+```
 
 ## **Getting Started**
 
@@ -74,8 +75,8 @@ Follow these steps to set up and run the Pull Request Time Estimator.
 ### **Installation**
 
 1. **Clone the repository:**  
-   git clone https://github.com/your-username/pr-estimator.git \# Replace with your repo URL  
-   cd pr-estimator
+   git clone https://github.com/sushant-115/pr-effort-estimator.git \# Replace with your repo URL  
+   cd pr-effort-estimator
 
 2. **Initialize Go Module and Download Dependencies:**  
    go mod tidy
