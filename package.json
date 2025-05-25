@@ -1,23 +1,12 @@
 {
-  "name": "vulnerable-project",
-  "version": "1.0.0",
-  "description": "A deliberately vulnerable Node.js project",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
   "dependencies": {
-    "express": "4.17.1",
-    "lodash": "4.17.11",
-    "jquery": "3.4.0",
     "debug": "2.6.8",
+    "express": "4.17.1",
+    "jquery": "3.4.0",
+    "lodash": "4.17.11",
     "minimist": "0.0.8"
   },
   "devDependencies": {
-    "mocha": "5.2.0"
-  },
-  "engines": {
-    "node": ">=14"
-  },
-  "license": "MIT"
+    "mocha": "11.5.0"
+  }
 }
