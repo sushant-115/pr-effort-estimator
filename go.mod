@@ -1,6 +1,6 @@
 module github.com/sushant-115/pr-effort-estimator
 
-go 1.24.3
+go 
 
 require (
 	github.com/google/go-github/v63 v63.0.0
@@ -8,4 +8,4 @@ require (
 )
 
 require github.com/google/go-querystring v1.1.0 // indirect
-require golang.org/x/text v0.3.0 // indirect
+require golang.org/x/text v0.25.0 // indirect
