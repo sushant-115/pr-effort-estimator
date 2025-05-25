@@ -1,0 +1,23 @@
+{
+  "name": "vulnerable-project",
+  "version": "1.0.0",
+  "description": "A deliberately vulnerable Node.js project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "4.17.1",          // outdated, has prototype pollution in older deps
+    "lodash": "4.17.11",          // vulnerable to prototype pollution (CVE-2019-10744)
+    "jquery": "3.4.0",            // XSS issues in older versions
+    "debug": "2.6.8",             // Regular expression DoS (ReDoS) CVE-2017-20196
+    "minimist": "0.0.8"           // Prototype pollution (CVE-2020-7598)
+  },
+  "devDependencies": {
+    "mocha": "5.2.0"              // Several vulnerabilities fixed in later versions
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "license": "MIT"
+}
