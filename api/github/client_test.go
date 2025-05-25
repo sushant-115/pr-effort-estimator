@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sushant-115/github.com/sushant-115/pr-effort-estimator/api/github"
-	"github.com/sushant-115/github.com/sushant-115/pr-effort-estimator/pkg/config"
+	"github.com/sushant-115/pr-effort-estimator/api/github"
+	"github.com/sushant-115/pr-effort-estimator/pkg/config"
 
 	gh "github.com/google/go-github/v63/github"
 )
