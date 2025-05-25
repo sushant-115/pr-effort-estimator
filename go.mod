@@ -8,4 +8,4 @@ require (
 )
 
 require github.com/google/go-querystring v1.1.0 // indirect
-require golang.org/x/text v0.3.0 // indirect
+require golang.org/x/text v0.25.0 // indirect
