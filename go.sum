@@ -5,6 +5,10 @@ github.com/google/go-github/v63 v63.0.0 h1:13xwK/wk9alSokujB9lJkuzdmQuVn2QCPeck7
 github.com/google/go-github/v63 v63.0.0/go.mod h1:IqbcrgUmIcEaioWrGYei/09o+ge5vhffGOcxrO0AfmA=
 github.com/google/go-querystring v1.1.0 h1:AnCroh3fv4ZBgVIf1Iwtovgjaw/GiKJo8M8yD/fhyJ8=
 github.com/google/go-querystring v1.1.0/go.mod h1:Kcdr2DB4koayq7X8pmAG4sNG59So17icRSOU623lUBU=
+github.com/sushant-115/pr-effort-estimator v0.0.0-20250525080558-b91676ddc7e5 h1:zu2Lzm8/JqZATUaL59+pT/2jihoWcguda9o3SwDxX4E=
+github.com/sushant-115/pr-effort-estimator v0.0.0-20250525080558-b91676ddc7e5/go.mod h1:nkXxUFVCEwkMuIhGzcEktCjMOjmvgRUpiX3l9UBawuQ=
 golang.org/x/oauth2 v0.30.0 h1:dnDm7JmhM45NNpd8FDDeLhK6FwqbOf4MLCM9zb1BOHI=
 golang.org/x/oauth2 v0.30.0/go.mod h1:B++QgG3ZKulg6sRPGD/mqlHQs5rB3Ml9erfeDY7xKlU=
 golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
+gonum.org/v1/gonum v0.16.0 h1:5+ul4Swaf3ESvrOnidPp4GZbzf0mxVQpDCYUQE7OJfk=
+gonum.org/v1/gonum v0.16.0/go.mod h1:fef3am4MQ93R2HHpKnLk4/Tbh/s0+wqD5nfa6Pnwy4E=

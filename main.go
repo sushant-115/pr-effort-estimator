@@ -1,7 +1,7 @@
 package main
 
 import (
-	"pr-effort-estimator/cmd"
+	"github.com/sushant-115/pr-effort-estimator/cmd"
 )
 
 func main() {

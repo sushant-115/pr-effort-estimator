@@ -3,9 +3,10 @@ package cmd
 import (
 	"context"
 	"log"
-	"pr-effort-estimator/api/github"
-	"pr-effort-estimator/internal/metrics"
-	"pr-effort-estimator/pkg/config"
+
+	"github.com/sushant-115/pr-effort-estimator/api/github"
+	"github.com/sushant-115/pr-effort-estimator/internal/metrics"
+	"github.com/sushant-115/pr-effort-estimator/pkg/config"
 )
 
 func Run() {

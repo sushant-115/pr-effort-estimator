@@ -1,10 +1,12 @@
 package metrics_test
 
 import (
-	"pr-effort-estimator/api/github"
-	"pr-effort-estimator/internal/metrics"
+	"math"
 	"testing"
 	"time"
+
+	"github.com/sushant-115/pr-effort-estimator/api/github"
+	"github.com/sushant-115/pr-effort-estimator/internal/metrics"
 )
 
 func TestCalculateMetrics_MergedPRWithReview(t *testing.T) {
@@ -116,9 +118,6 @@ func TestCalculateMetrics_MergedPRNoReview(t *testing.T) {
 	}
 }
 
-// TestAnalyzePrs is more of an integration test for logging and aggregation.
-// We'll just ensure it doesn't panic and prints some output.
-// For detailed metric calculation, individual CalculateMetrics tests are sufficient.
 func TestAnalyzePrs(t *testing.T) {
 	now := time.Now()
 	prs := []*github.PrData{
@@ -147,4 +146,96 @@ func TestAnalyzePrs(t *testing.T) {
 	// and produces some output. Capturing log output for assertion is
 	// more complex and often not necessary for simple logging functions.
 	metrics.AnalyzePrs(prs)
+}
+
+func TestEstimateTimesUsingNormalDistribution(t *testing.T) {
+	// Sample data in hours
+	// 24h, 48h, 36h, 60h, 30h
+	prMetrics := []*metrics.PrMetrics{
+		{Number: 1, TimeToMerge: 24 * time.Hour, State: "merged"},
+		{Number: 2, TimeToMerge: 48 * time.Hour, State: "merged"},
+		{Number: 3, TimeToMerge: 36 * time.Hour, State: "merged"},
+		{Number: 4, TimeToMerge: 60 * time.Hour, State: "merged"},
+		{Number: 5, TimeToMerge: 30 * time.Hour, State: "merged"},
+		{Number: 6, TimeToMerge: 0 * time.Hour, State: "open"}, // Should be ignored
+	}
+
+	// Selector for TimeToMerge
+	selector := func(m *metrics.PrMetrics) time.Duration {
+		return m.TimeToMerge
+	}
+
+	estimates := metrics.EstimateTimesUsingNormalDistribution(prMetrics, selector, "Test Metric")
+
+	// Convert expected values to hours for easier comparison
+	expectedMeanHours := (24.0 + 48.0 + 36.0 + 60.0 + 30.0) / 5.0 // 39.6
+	// Expected standard deviation needs to be calculated by hand or a tool for precise comparison
+	// For a simple test, we can check if it's within a reasonable range.
+	// Using a calculator for StDev of [24, 48, 36, 60, 30] is approx 13.91
+	expectedStdDevHours := 13.91 // Approximate
+
+	// Quantiles:
+	// For a normal distribution with mean 39.6 and stddev 13.91:
+	// P50 (Median) is close to Mean
+	// P80, P90, P95 will be higher than the mean
+
+	// Allow for small floating point deviations
+	tolerance := 1 * time.Minute
+
+	if estimates.SampleCount != 5 {
+		t.Errorf("Expected sample count 5, got %d", estimates.SampleCount)
+	}
+	if math.Abs(estimates.Mean.Hours()-expectedMeanHours) > tolerance.Hours() {
+		t.Errorf("Expected Mean %v, got %v", time.Duration(expectedMeanHours*float64(time.Hour)), estimates.Mean)
+	}
+	// For StdDev and Percentiles, check if they are within a reasonable range
+	// As exact values depend on `gonum`'s implementation, and floating point math.
+	if estimates.StdDev < 10*time.Hour || estimates.StdDev > 20*time.Hour { // Rough range
+		t.Errorf("Expected StdDev to be around 13.91h, got %v", estimates.StdDev)
+	}
+	if estimates.P50 < 35*time.Hour || estimates.P50 > 45*time.Hour { // Roughly around the mean
+		t.Errorf("Expected P50 to be around 39.6h, got %v", estimates.P50)
+	}
+	if estimates.P80 < 50*time.Hour || estimates.P80 > 60*time.Hour { // Should be > mean
+		t.Errorf("Expected P80 to be greater than mean, got %v", estimates.P80)
+	}
+	if estimates.P90 < 55*time.Hour || estimates.P90 > 70*time.Hour { // Should be > P80
+		t.Errorf("Expected P90 to be greater than P80, got %v", estimates.P90)
+	}
+	if estimates.P95 < 60*time.Hour || estimates.P95 > 80*time.Hour { // Should be > P90
+		t.Errorf("Expected P95 to be greater than P90, got %v", estimates.P95)
+	}
+}
+
+func TestEstimateTimesUsingNormalDistribution_InsufficientData(t *testing.T) {
+	prMetrics := []*metrics.PrMetrics{
+		{Number: 1, TimeToMerge: 24 * time.Hour, State: "merged"},
+	}
+	selector := func(m *metrics.PrMetrics) time.Duration {
+		return m.TimeToMerge
+	}
+
+	estimates := metrics.EstimateTimesUsingNormalDistribution(prMetrics, selector, "Insufficient Data Test")
+	if estimates.SampleCount != 0 {
+		t.Errorf("Expected 0 sample count for insufficient data, got %d", estimates.SampleCount)
+	}
+	// Other fields should also be zero-valued
+	if estimates.Mean != 0 || estimates.StdDev != 0 || estimates.P50 != 0 {
+		t.Errorf("Expected all estimates to be zero-valued for insufficient data, got %+v", estimates)
+	}
+}
+
+func TestEstimateTimesUsingNormalDistribution_NoValidData(t *testing.T) {
+	prMetrics := []*metrics.PrMetrics{
+		{Number: 1, TimeToMerge: 0 * time.Hour, State: "open"},
+		{Number: 2, TimeToMerge: 0 * time.Hour, State: "open"},
+	}
+	selector := func(m *metrics.PrMetrics) time.Duration {
+		return m.TimeToMerge
+	}
+
+	estimates := metrics.EstimateTimesUsingNormalDistribution(prMetrics, selector, "No Valid Data Test")
+	if estimates.SampleCount != 0 {
+		t.Errorf("Expected 0 sample count for no valid data, got %d", estimates.SampleCount)
+	}
 }

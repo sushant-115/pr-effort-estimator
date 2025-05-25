@@ -2,8 +2,9 @@ package config_test
 
 import (
 	"os"
-	"pr-effort-estimator/pkg/config"
 	"testing"
+
+	"github.com/sushant-115/pr-effort-estimator/pkg/config"
 )
 
 func TestLoadGitHubConfig_Success(t *testing.T) {

@@ -8,11 +8,12 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
-	"pr-effort-estimator/api/github"
-	"pr-effort-estimator/internal/metrics"
-	"pr-effort-estimator/pkg/config"
 	"testing"
 	"time"
+
+	"github.com/sushant-115/pr-effort-estimator/api/github"
+	"github.com/sushant-115/pr-effort-estimator/internal/metrics"
+	"github.com/sushant-115/pr-effort-estimator/pkg/config"
 
 	gh "github.com/google/go-github/v63/github"
 	// Import the main package as a separate package for testing
